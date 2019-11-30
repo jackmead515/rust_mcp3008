@@ -1,0 +1,9 @@
+[package]
+name = "rust_pi_sensors"
+version = "0.1.0"
+authors = ["jack <jackmead515@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+spidev = "0.4.0"
+rppal = "0.11.3"
