@@ -1,5 +1,5 @@
 [package]
-name = "rust_pi_sensors"
+name = "rust_mcp3008"
 version = "0.1.0"
 authors = ["jack <jackmead515@gmail.com>"]
 edition = "2018"
