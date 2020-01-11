@@ -14,7 +14,7 @@ pub struct MCP3008 {
   cs: GPIOPin
 }
 
-pub fn create() -> Result<MCP3008, Errors> {
+pub fn create(chip_select: u8) -> Result<MCP3008, Errors> {
   let options = SpidevOptions::new()
     .bits_per_word(8)
     .max_speed_hz(1_000_000)
@@ -31,7 +31,7 @@ pub fn create() -> Result<MCP3008, Errors> {
     Err(_) => return Err(Errors::FailedInit)
   };
 
-  let mut cs = match GPIOPin::new(25) {
+  let mut cs = match GPIOPin::new(chip_select) {
     Ok(cs) => cs,
     Err(_) => return Err(Errors::FailedInit)
   };
@@ -60,12 +60,12 @@ impl MCP3008 {
     return Ok((((read[1] as u16) << 8) | (read[2] as u16)) & 1023);
   }
 
-  pub fn read_all(&mut self) -> Vec<isize> {
+  pub fn read_all(&mut self) -> Vec<usize> {
     let mut values = Vec::new();
     for i in 0..8 {
       match self.read(i as u8) {
-        Ok(value) => values.push(value as isize),
-        Err(_) => values.push(-1)
+        Ok(value) => values.push(value as usize),
+        Err(_) => values.push(1024)
       };
     }
     return values;
